@@ -28,7 +28,8 @@ The following operating system groups and user are required when you are install
 Refer to the Oracle Documentation for more information: http://docs.oracle.com/cd/E11882_01/install.112/e24321/pre_install.htm#BABHHEJD
 
 The Silver Fabric engine that will be running the Oracle Database 11gR2 Enabler can either be run as the user created above or as root.  If 
-the engine is run as root, the RuntimeContextVariable ${UNIX_USER_NAME} value needs to be set to the user created above.
+the engine is run as root, the RuntimeContextVariable ${UNIX_USER_NAME} value needs to be set to the user created above. Additionally, the
+path to the engine work directory needs to have read and execute priviledges for the user created above.
 
 Installation
 --------------------------------------
@@ -43,8 +44,7 @@ Runtime Grid Library
 The Enabler Runtime Grid Library is created by building the maven project. The build depends on the SilverFabricSDK jar file that is distributed with TIBCO Silver Fabric. 
 The SilverFabricSDK.jar file needs to be referenced in the maven pom.xml or it can be placed in the project root directory.  
 
-The build also depends on the Oracle JDBC Driver (ojdbc6.jar). The ojdbc6.jar needs needs to be referenced in the maven pom.xml or 
-it can be placed in the ${project root directory}/src/main/resources/jars directory.
+The build also depends on the Oracle JDBC Driver (ojdbc6.jar). The ojdbc6.jar needs to be copied to the ${project root directory}/src/main/resources/jars directory.
 The ojdbc6.jar can be found at http://www.oracle.com/technetwork/database/enterprise-edition/jdbc-112010-090769.html
 
 ```bash
