@@ -32,7 +32,11 @@ class OracleDatabase:
             type, value, traceback = sys.exc_info()
             logger.severe("Hostname error:" + `value`)
         
-        additionalVariables.add(RuntimeContextVariable("ORACLE_HOSTNAME", self.__hostname, RuntimeContextVariable.ENVIRONMENT_TYPE))
+        additionalVariables.add(RuntimeContextVariable("ORACLE_HOSTNAME", self.__hostname, RuntimeContextVariable.ENVIRONMENT_TYPE, "Oracle Hostname", True, RuntimeContextVariable.NO_INCREMENT))
+        
+        listenAddress = getVariableValue("LISTEN_ADDRESS")
+        additionalVariables.add(RuntimeContextVariable("ORACLE_LISTEN_ADDRESS", listenAddress, RuntimeContextVariable.ENVIRONMENT_TYPE, "Oracle Listen Address", True, RuntimeContextVariable.NO_INCREMENT))
+        
 
         dbPassword = getVariableValue("DB_PASSWORD_ALL")
         
@@ -68,11 +72,11 @@ class OracleDatabase:
         logger.info("Oracle listener service URL:" + self.__oracleServiceUrl)
         
         self.__jdbcUrl = "jdbc:oracle:thin:@" + self.__hostname +":"+ tcpPort + ":" + self.__serviceName
-        runtimeContext.addVariable(RuntimeContextVariable("JDBC_URL", self.__jdbcUrl, RuntimeContextVariable.STRING_TYPE, "Oracle Thin Driver JDBC Url", True, RuntimeContextVariable.NO_INCREMENT))
+        additionalVariables.add(RuntimeContextVariable("JDBC_URL", self.__jdbcUrl, RuntimeContextVariable.STRING_TYPE, "Oracle Thin Driver JDBC Url", True, RuntimeContextVariable.NO_INCREMENT))
         
         
         oracleDriver = "oracle.jdbc.OracleDriver"
-        runtimeContext.addVariable(RuntimeContextVariable("JDBC_DRIVER", oracleDriver, RuntimeContextVariable.STRING_TYPE, "Oracle Thin Driver class", True, RuntimeContextVariable.NO_INCREMENT))
+        additionalVariables.add(RuntimeContextVariable("JDBC_DRIVER", oracleDriver, RuntimeContextVariable.STRING_TYPE, "Oracle Thin Driver class", True, RuntimeContextVariable.NO_INCREMENT))
         
         self.__dbControl = Boolean.parseBoolean(getVariableValue("CONFIG_DBCONTROL", "false"))
         
@@ -159,11 +163,11 @@ class OracleDatabase:
                     if rset.next():
                         success = True
                     else:
-                        logger.info("No meta data found for Oracle service URL:" + self.__oracleServiceUrl + ":SELECT * FROM sys.dual")
+                        logger.warning("No meta data found for Oracle service URL:" + self.__oracleServiceUrl + ":SELECT * FROM sys.dual")
                 else:
-                    logger.info("Unable to create JDBC SQL statement for Oracle service URL:" + self.__oracleServiceUrl + ":SELECT * FROM sys.dual")
+                    logger.warning("Unable to create JDBC SQL statement for Oracle service URL:" + self.__oracleServiceUrl + ":SELECT * FROM sys.dual")
             else:
-                logger.info("Unable to get JDBC connection for Oracle service URL:" + self.__oracleServiceUrl)
+                logger.warning("Unable to get JDBC connection for Oracle service URL:" + self.__oracleServiceUrl)
         except:
             type, value, traceback = sys.exc_info()
             logger.severe("MetaData error for Oracle service URL:" + self.__oracleServiceUrl + ":"+ `value`)

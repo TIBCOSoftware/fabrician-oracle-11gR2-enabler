@@ -113,6 +113,7 @@
 			<property name="autoIncrementType" value="Numeric" />
 			<property name="type" value="Environment" />
 			<property name="description" value="TNS Listener TCP port" />
+			<property name="export" value="true" />
 			<property name="name" value="TCP_PORT" />
 		</variable>
 
@@ -284,6 +285,7 @@
 			<property name="autoIncrementType" value="None" />
 			<property name="type" value="Environment" />
 			<property name="description" value="Global Database name" />
+			<property name="export" value="true" />
 			<property name="name" value="DB_GLOBAL_NAME" />
 		</variable>
 
@@ -350,6 +352,7 @@
 			<property name="autoIncrementType" value="None" />
 			<property name="type" value="String" />
 			<property name="description" value="Password used for SYS, SYSTEM, SYSMAN, DBSNMP if not set." />
+			<property name="export" value="true" />
 			<property name="name" value="DB_PASSWORD_ALL" />
 		</variable>
 
